@@ -31,6 +31,7 @@ struct EnvironmentClient {
     var awsDocsBucket: @Sendable () -> String?
     var awsReadmeBucket: @Sendable () -> String?
     var awsSecretAccessKey: @Sendable () -> String?
+    var backpressureConfiguration: @Sendable () -> BackpressureMiddleware.Configuration?
     var builderToken: @Sendable () -> String?
     var buildTimeout: @Sendable () -> Int = { XCTFail("buildTimeout"); return 10 }
     var buildTriggerAllowList: @Sendable () -> [Package.Id] = { XCTFail("buildTriggerAllowList"); return [] }
@@ -72,6 +73,10 @@ extension EnvironmentClient: DependencyKey {
             awsDocsBucket: { Environment.get("AWS_DOCS_BUCKET") },
             awsReadmeBucket: { Environment.get("AWS_README_BUCKET") },
             awsSecretAccessKey: { Environment.get("AWS_SECRET_ACCESS_KEY") },
+            backpressureConfiguration: {
+                Environment.decode("BACKPRESSURE_CONFIG",
+                                   as: BackpressureMiddleware.Configuration.self)
+            },
             builderToken: { Environment.get("BUILDER_TOKEN") },
             buildTimeout: { Environment.get("BUILD_TIMEOUT").flatMap(Int.init) ?? 10 },
             buildTriggerAllowList: {
@@ -137,6 +142,7 @@ extension EnvironmentClient: TestDependencyKey {
         // mechanism for a few heavily used dependencies at the moment.
         var mock = Self()
         mock.appVersion = { "test" }
+        mock.backpressureConfiguration = { nil }
         mock.current = { .development }
         return mock
     }
