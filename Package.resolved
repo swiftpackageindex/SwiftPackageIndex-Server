@@ -1,5 +1,5 @@
 {
-  "originHash" : "192dccdf148d5caa938e0fe6f73a430a5348c38ffd64a906ae36e2d45449805b",
+  "originHash" : "c68e60d7c703a8fa9fb0a3a11024cf6b2304fb294ba9f124de1d41f024b11cc9",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -26,15 +26,6 @@
       "state" : {
         "revision" : "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
         "version" : "2.0.2"
-      }
-    },
-    {
-      "identity" : "cache",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/0xLeif/Cache.git",
-      "state" : {
-        "revision" : "a535c68aab7bf0b42bda7a5de66b04f86e48c6e6",
-        "version" : "2.1.0"
       }
     },
     {
@@ -519,8 +510,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-server/swift-service-lifecycle.git",
       "state" : {
-        "revision" : "f70b838872863396a25694d8b19fe58bcd0b7903",
-        "version" : "2.6.2"
+        "revision" : "c2e97cf6f81510f2d6b4a69453861db65d478560",
+        "version" : "2.6.3"
       }
     },
     {
