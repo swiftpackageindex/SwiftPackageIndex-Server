@@ -40,6 +40,7 @@ struct EnvironmentClient {
     var collectionSigningPrivateKey: @Sendable () -> Data?
     var current: @Sendable () -> Environment = { XCTFail("current"); return .development }
     var dbId: @Sendable () -> String?
+    var enableCFRayLogging: @Sendable () -> Bool = { XCTFail("enableCFRayLogging"); return true }
     var mastodonCredentials: @Sendable () -> Mastodon.Credentials?
     var random: @Sendable (_ range: ClosedRange<Double>) -> Double = { XCTFail("random"); return Double.random(in: $0) }
 
@@ -102,6 +103,11 @@ extension EnvironmentClient: DependencyKey {
             },
             current: { (try? Environment.detect()) ?? .development },
             dbId: { Environment.get("DATABASE_ID") },
+            enableCFRayLogging: {
+                Environment.get("ENABLE_CF_RAY_LOGGING")
+                    .flatMap(\.asBool)
+                ?? false
+            },
             mastodonCredentials: {
                 Environment.get("MASTODON_ACCESS_TOKEN")
                     .map(Mastodon.Credentials.init(accessToken:))
@@ -143,6 +149,7 @@ extension EnvironmentClient: TestDependencyKey {
         var mock = Self()
         mock.appVersion = { "test" }
         mock.current = { .development }
+        mock.enableCFRayLogging = { true }
         return mock
     }
 }
